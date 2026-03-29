@@ -37,7 +37,7 @@ const LoginPage = () => {
           </div>
           <div>
             <h1 className="text-2xl font-display font-bold text-foreground">Welcome Back</h1>
-            <p className="text-sm text-muted-foreground mt-1">Sign in to your LegalAI account</p>
+            <p className="text-sm text-muted-foreground mt-1">Sign in to your NyayaSetu account</p>
           </div>
         </CardHeader>
 

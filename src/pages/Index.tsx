@@ -17,7 +17,7 @@ const Index = () => (
         <div className="w-9 h-9 rounded-xl bg-primary flex items-center justify-center">
           <Scale className="w-5 h-5 text-primary-foreground" />
         </div>
-        <span className="font-display font-bold text-xl text-foreground">LegalAI</span>
+        <span className="font-display font-bold text-xl text-foreground">NyayaSetu</span>
       </div>
       <div className="flex gap-2">
         <Button variant="ghost" asChild><Link to="/login">Sign In</Link></Button>
@@ -68,7 +68,7 @@ const Index = () => (
 
     {/* Footer */}
     <footer className="border-t py-6 text-center text-xs text-muted-foreground">
-      © 2026 LegalAI. AI-generated legal information, not legal advice.
+      © 2026 NyayaSetu. AI-generated legal information, not legal advice.
     </footer>
   </div>
 );

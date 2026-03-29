@@ -34,7 +34,7 @@ export function DashboardSidebar() {
           </div>
           {!collapsed && (
             <span className="font-display font-bold text-sidebar-foreground text-lg">
-              LegalAI
+              NyayaSetu
             </span>
           )}
         </div>

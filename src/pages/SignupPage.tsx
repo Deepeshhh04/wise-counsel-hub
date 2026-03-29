@@ -43,7 +43,7 @@ const SignupPage = () => {
           </div>
           <div>
             <h1 className="text-2xl font-display font-bold text-foreground">Create Account</h1>
-            <p className="text-sm text-muted-foreground mt-1">Get started with LegalAI today</p>
+            <p className="text-sm text-muted-foreground mt-1">Get started with NyayaSetu today</p>
           </div>
         </CardHeader>
 
