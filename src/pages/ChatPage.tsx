@@ -57,7 +57,7 @@ const ChatPage = () => {
   const [language, setLanguage] = useState("en");
   const [isListening, setIsListening] = useState(false);
   const scrollRef = useRef<HTMLDivElement>(null);
-  const recognitionRef = useRef<SpeechRecognition | null>(null);
+  const recognitionRef = useRef<any>(null);
   const { toast } = useToast();
 
   useEffect(() => {
