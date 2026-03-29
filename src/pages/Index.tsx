@@ -68,7 +68,7 @@ const Index = () => (
 
     {/* Footer */}
     <footer className="border-t py-6 text-center text-xs text-muted-foreground">
-      © 2026 LegalAI. AI-generated legal information, not legal advice.
+      © 2026 NyayaSetu. AI-generated legal information, not legal advice.
     </footer>
   </div>
 );

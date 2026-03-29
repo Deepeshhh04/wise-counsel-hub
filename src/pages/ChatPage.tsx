@@ -1,10 +1,11 @@
-import { useState, useRef, useEffect } from "react";
-import { Send, Globe } from "lucide-react";
+import { useState, useRef, useEffect, useCallback } from "react";
+import { Send, Globe, Mic, MicOff } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import ChatMessage from "@/components/ChatMessage";
 import TypingIndicator from "@/components/TypingIndicator";
+import { useToast } from "@/hooks/use-toast";
 
 interface Message {
   id: number;
@@ -38,20 +39,34 @@ const languages = [
   { value: "mr", label: "मराठी (Marathi)" },
 ];
 
+const langCodes: Record<string, string> = {
+  en: "en-IN",
+  hi: "hi-IN",
+  pa: "pa-IN",
+  ta: "ta-IN",
+  te: "te-IN",
+  bn: "bn-IN",
+  mr: "mr-IN",
+};
+
 const ChatPage = () => {
   const [messages, setMessages] = useState<Message[]>(sampleMessages);
   const [input, setInput] = useState("");
   const [isTyping, setIsTyping] = useState(false);
   const [language, setLanguage] = useState("en");
+  const [isListening, setIsListening] = useState(false);
   const scrollRef = useRef<HTMLDivElement>(null);
+  const recognitionRef = useRef<SpeechRecognition | null>(null);
+  const { toast } = useToast();
 
   useEffect(() => {
     scrollRef.current?.scrollTo({ top: scrollRef.current.scrollHeight, behavior: "smooth" });
   }, [messages, isTyping]);
 
-  const handleSend = () => {
-    if (!input.trim()) return;
-    const userMsg: Message = { id: Date.now(), role: "user", content: input };
+  const handleSend = useCallback((text?: string) => {
+    const msg = text ?? input;
+    if (!msg.trim()) return;
+    const userMsg: Message = { id: Date.now(), role: "user", content: msg };
     setMessages((prev) => [...prev, userMsg]);
     setInput("");
     setIsTyping(true);
@@ -70,14 +85,56 @@ const ChatPage = () => {
       ]);
       setIsTyping(false);
     }, 1500);
-  };
+  }, [input]);
+
+  const toggleVoiceInput = useCallback(() => {
+    const SpeechRecognition = window.SpeechRecognition || (window as any).webkitSpeechRecognition;
+    if (!SpeechRecognition) {
+      toast({ title: "Voice input not supported", description: "Your browser doesn't support speech recognition.", variant: "destructive" });
+      return;
+    }
+
+    if (isListening && recognitionRef.current) {
+      recognitionRef.current.stop();
+      setIsListening(false);
+      return;
+    }
+
+    const recognition = new SpeechRecognition();
+    recognition.lang = langCodes[language] || "en-IN";
+    recognition.interimResults = true;
+    recognition.continuous = false;
+    recognitionRef.current = recognition;
+
+    recognition.onstart = () => setIsListening(true);
+
+    recognition.onresult = (event: SpeechRecognitionEvent) => {
+      const transcript = Array.from(event.results)
+        .map((r) => r[0].transcript)
+        .join("");
+      setInput(transcript);
+
+      if (event.results[0].isFinal) {
+        setIsListening(false);
+      }
+    };
+
+    recognition.onerror = () => {
+      setIsListening(false);
+      toast({ title: "Voice input error", description: "Could not recognize speech. Please try again.", variant: "destructive" });
+    };
+
+    recognition.onend = () => setIsListening(false);
+
+    recognition.start();
+  }, [isListening, language, toast]);
 
   return (
     <div className="flex flex-col h-[calc(100vh-3rem)] max-h-[calc(100vh-3rem)]">
       {/* Header */}
       <div className="flex items-center justify-between px-4 md:px-6 py-3 border-b bg-card">
         <div>
-          <h1 className="text-lg font-display font-bold text-foreground">Legal AI Assistant</h1>
+          <h1 className="text-lg font-display font-bold text-foreground">NyayaSetu AI</h1>
           <p className="text-xs text-muted-foreground">Ask any legal question in your preferred language</p>
         </div>
         <Select value={language} onValueChange={setLanguage}>
@@ -131,6 +188,15 @@ const ChatPage = () => {
             placeholder="Ask a legal question..."
             className="flex-1 h-11 bg-card"
           />
+          <Button
+            type="button"
+            size="icon"
+            variant={isListening ? "destructive" : "outline"}
+            className={`h-11 w-11 shrink-0 ${isListening ? "animate-pulse" : ""}`}
+            onClick={toggleVoiceInput}
+          >
+            {isListening ? <MicOff className="w-4 h-4" /> : <Mic className="w-4 h-4" />}
+          </Button>
           <Button type="submit" size="icon" className="h-11 w-11 shrink-0">
             <Send className="w-4 h-4" />
           </Button>
