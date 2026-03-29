@@ -7,6 +7,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import ChatMessage from "@/components/ChatMessage";
 import TypingIndicator from "@/components/TypingIndicator";
 import { useToast } from "@/hooks/use-toast";
+import { findLegalAnswer, FALLBACK_RESPONSE } from "@/data/legalDataset";
 
 interface Message {
   id: number;
@@ -72,20 +73,19 @@ const ChatPage = () => {
     setInput("");
     setIsTyping(true);
 
-    // Placeholder: POST /api/ask
+    const match = findLegalAnswer(msg);
     setTimeout(() => {
       setMessages((prev) => [
         ...prev,
         {
           id: Date.now() + 1,
           role: "ai",
-          content:
-            "Thank you for your question. Based on Indian legal provisions, I can provide the following information. Please consult a qualified lawyer for specific advice regarding your case.",
-          references: ["IPC Section 406"],
+          content: match ? match.answer : FALLBACK_RESPONSE,
+          references: match ? match.references : [],
         },
       ]);
       setIsTyping(false);
-    }, 1500);
+    }, 1000);
   }, [input]);
 
   const toggleVoiceInput = useCallback(() => {
