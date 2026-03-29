@@ -101,7 +101,7 @@ const ChatPage = () => {
       return;
     }
 
-    const recognition = new SpeechRecognition();
+    const recognition = new SpeechRecognitionAPI();
     recognition.lang = langCodes[language] || "en-IN";
     recognition.interimResults = true;
     recognition.continuous = false;
