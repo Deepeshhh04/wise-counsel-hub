@@ -17,7 +17,7 @@ const Index = () => (
         <div className="w-9 h-9 rounded-xl bg-primary flex items-center justify-center">
           <Scale className="w-5 h-5 text-primary-foreground" />
         </div>
-        <span className="font-display font-bold text-xl text-foreground">LegalAI</span>
+        <span className="font-display font-bold text-xl text-foreground">NyayaSetu</span>
       </div>
       <div className="flex gap-2">
         <Button variant="ghost" asChild><Link to="/login">Sign In</Link></Button>
