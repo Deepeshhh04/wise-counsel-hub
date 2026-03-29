@@ -7,6 +7,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import ChatMessage from "@/components/ChatMessage";
 import TypingIndicator from "@/components/TypingIndicator";
 import { useToast } from "@/hooks/use-toast";
+import { findLegalAnswer, FALLBACK_RESPONSE } from "@/data/legalDataset";
 
 interface Message {
   id: number;
