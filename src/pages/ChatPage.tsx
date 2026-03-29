@@ -89,8 +89,8 @@ const ChatPage = () => {
   }, [input]);
 
   const toggleVoiceInput = useCallback(() => {
-    const SpeechRecognition = window.SpeechRecognition || (window as any).webkitSpeechRecognition;
-    if (!SpeechRecognition) {
+    const SpeechRecognitionAPI = (window as any).SpeechRecognition || (window as any).webkitSpeechRecognition;
+    if (!SpeechRecognitionAPI) {
       toast({ title: "Voice input not supported", description: "Your browser doesn't support speech recognition.", variant: "destructive" });
       return;
     }
