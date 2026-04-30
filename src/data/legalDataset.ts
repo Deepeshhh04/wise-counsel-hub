@@ -1,13 +1,4 @@
-export interface LegalEntry {
-  question: string;
-  keywords: string[];
-  answer: string;
-  references: string[];
-  category: string;
-  language_hints?: string[]; // multilingual keywords (Hindi/regional)
-}
-
-export const legalDataset: LegalEntry[] = [
+export const legalDataset = [
 
   // ─── CRIMINAL LAW ────────────────────────────────────────────────────────────
 
