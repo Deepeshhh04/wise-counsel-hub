@@ -1,4 +1,4 @@
-export const legalDataset = [
+const legalDataset = [
 
   // ─── CRIMINAL LAW ────────────────────────────────────────────────────────────
 
@@ -305,3 +305,26 @@ export const legalDataset = [
 ];
 
 export default legalDataset;
+// fallback response
+export const FALLBACK_RESPONSE = "Sorry, I couldn't find a relevant legal answer. Please try rephrasing your question.";
+
+// simple search function
+export const findLegalAnswer = (query: string) => {
+  const lowerQuery = query.toLowerCase();
+
+  for (const item of legalDataset) {
+    // match keywords
+    const keywordMatch = item.keywords.some(keyword =>
+      lowerQuery.includes(keyword.toLowerCase())
+    );
+
+    // match question text
+    const questionMatch = lowerQuery.includes(item.question.toLowerCase());
+
+    if (keywordMatch || questionMatch) {
+      return item.answer;
+    }
+  }
+
+  return FALLBACK_RESPONSE;
+};
