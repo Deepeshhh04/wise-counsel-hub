@@ -1,4 +1,4 @@
-import { MessageSquare, Users, User, LogOut, Scale } from "lucide-react";
+import { MessageSquare, Users, User, LogOut, Scale, FileText } from "lucide-react";
 import { NavLink } from "@/components/NavLink";
 import {
   Sidebar,
@@ -18,6 +18,7 @@ import { Button } from "@/components/ui/button";
 const navItems = [
   { title: "AI Chat", url: "/chat", icon: MessageSquare },
   { title: "Lawyer Connect", url: "/lawyers", icon: Users },
+  { title: "Legal Agreements", url: "/frameworks", icon: FileText },
   { title: "Dashboard", url: "/dashboard", icon: User },
 ];
 
