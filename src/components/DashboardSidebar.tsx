@@ -1,5 +1,18 @@
+<<<<<<< HEAD
 import { MessageSquare, Users, User, LogOut, Scale, FileText } from "lucide-react";
+=======
+import {
+  MessageSquare,
+  Users,
+  User,
+  LogOut,
+  Scale,
+  FileText,
+} from "lucide-react";
+
+>>>>>>> 221aad9 (Legal agreement added)
 import { NavLink } from "@/components/NavLink";
+
 import {
   Sidebar,
   SidebarContent,
@@ -13,17 +26,45 @@ import {
   SidebarFooter,
   useSidebar,
 } from "@/components/ui/sidebar";
+
 import { Button } from "@/components/ui/button";
 
 const navItems = [
+<<<<<<< HEAD
   { title: "AI Chat", url: "/chat", icon: MessageSquare },
   { title: "Lawyer Connect", url: "/lawyers", icon: Users },
   { title: "Legal Agreements", url: "/frameworks", icon: FileText },
   { title: "Dashboard", url: "/dashboard", icon: User },
+=======
+  {
+    title: "AI Chat",
+    url: "/chat",
+    icon: MessageSquare,
+  },
+
+  {
+    title: "Lawyer Connect",
+    url: "/lawyers",
+    icon: Users,
+  },
+
+  {
+    title: "Legal Agreements",
+    url: "/frameworks",
+    icon: FileText,
+  },
+
+  {
+    title: "Dashboard",
+    url: "/dashboard",
+    icon: User,
+  },
+>>>>>>> 221aad9 (Legal agreement added)
 ];
 
 export function DashboardSidebar() {
   const { state } = useSidebar();
+
   const collapsed = state === "collapsed";
 
   return (
@@ -33,6 +74,7 @@ export function DashboardSidebar() {
           <div className="w-8 h-8 rounded-lg bg-sidebar-primary flex items-center justify-center">
             <Scale className="w-4 h-4 text-sidebar-primary-foreground" />
           </div>
+
           {!collapsed && (
             <span className="font-display font-bold text-sidebar-foreground text-lg">
               NyayaSetu
@@ -43,7 +85,10 @@ export function DashboardSidebar() {
 
       <SidebarContent>
         <SidebarGroup>
-          <SidebarGroupLabel>Navigation</SidebarGroupLabel>
+          <SidebarGroupLabel>
+            Navigation
+          </SidebarGroupLabel>
+
           <SidebarGroupContent>
             <SidebarMenu>
               {navItems.map((item) => (
@@ -56,7 +101,10 @@ export function DashboardSidebar() {
                       activeClassName="bg-sidebar-accent text-sidebar-primary font-medium"
                     >
                       <item.icon className="mr-2 h-4 w-4" />
-                      {!collapsed && <span>{item.title}</span>}
+
+                      {!collapsed && (
+                        <span>{item.title}</span>
+                      )}
                     </NavLink>
                   </SidebarMenuButton>
                 </SidebarMenuItem>
@@ -70,9 +118,12 @@ export function DashboardSidebar() {
         <Button
           variant="ghost"
           className="w-full justify-start text-sidebar-foreground/70 hover:text-sidebar-foreground hover:bg-sidebar-accent"
-          onClick={() => {/* placeholder logout */}}
+          onClick={() => {
+            // placeholder logout
+          }}
         >
           <LogOut className="mr-2 h-4 w-4" />
+
           {!collapsed && "Logout"}
         </Button>
       </SidebarFooter>
