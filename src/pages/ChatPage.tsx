@@ -18,7 +18,8 @@ import ChatMessage from "@/components/ChatMessage";
 import TypingIndicator from "@/components/TypingIndicator";
 
 import { useToast } from "@/hooks/use-toast";
-import { findLegalAnswer, FALLBACK_RESPONSE } from "@/data/legalDataset";
+import { findLegalAnswer, findLegalReferences, FALLBACK_RESPONSE } from "@/data/legalDataset";
+import { translateText, detectInputLanguage } from "@/lib/translate";
 
 interface Message {
   id: number;
@@ -38,11 +39,7 @@ const sampleMessages: Message[] = [
     role: "ai",
     content:
       "Under the Negotiable Instruments Act, 1881, a cheque bounce is a criminal offence under Section 138. The drawer can face imprisonment up to 2 years, or a fine up to twice the cheque amount, or both. The payee must issue a legal notice within 30 days of receiving the return memo from the bank.",
-    references: [
-      "NI Act Section 138",
-      "NI Act Section 141",
-      "IPC Section 420",
-    ],
+    references: ["NI Act Section 138", "NI Act Section 141", "NI Act Section 142"],
   },
 ];
 
@@ -56,6 +53,7 @@ const languages = [
   { value: "mr", label: "मराठी (Marathi)" },
 ];
 
+// Maps language codes to browser SpeechRecognition locale strings
 const langCodes: Record<string, string> = {
   en: "en-IN",
   hi: "hi-IN",
@@ -78,6 +76,7 @@ const ChatPage = () => {
 
   const { toast } = useToast();
 
+  // Auto-scroll to bottom on new messages
   useEffect(() => {
     scrollRef.current?.scrollTo({
       top: scrollRef.current.scrollHeight,
@@ -88,7 +87,6 @@ const ChatPage = () => {
   const handleSend = useCallback(
     (text?: string) => {
       const msg = text ?? input;
-
       if (!msg.trim()) return;
 
       const userMsg: Message = {
@@ -98,27 +96,68 @@ const ChatPage = () => {
       };
 
       setMessages((prev) => [...prev, userMsg]);
-
       setInput("");
       setIsTyping(true);
 
-      // findLegalAnswer returns a STRING
-      const match = findLegalAnswer(msg);
+      setTimeout(async () => {
+        try {
+          // ── STEP 1: Translate user question → English for dataset matching ──
+          // detectInputLanguage checks for non-Latin script (Hindi, Bengali etc.)
+          // and passes "auto" so MyMemory detects the source language correctly.
+const englishQuestion =
+  language === "en"
+    ? msg
+    : await translateText(msg, "en", language); // pass actual language code, not "auto"
+          console.log("[NyayaSetu] English question:", englishQuestion);
 
-      setTimeout(() => {
-        const aiMsg: Message = {
-          id: Date.now() + 1,
-          role: "ai",
-          content: match || FALLBACK_RESPONSE,
-          references: [],
-        };
+          // ── STEP 2: Search the dataset using the English question ──
+          // findLegalAnswer returns string|null — use ?? to fall back
+          const matchedAnswer = findLegalAnswer(englishQuestion);
+          const matchedRefs = findLegalReferences(englishQuestion);
+          const englishResponse = matchedAnswer ?? FALLBACK_RESPONSE;
 
-        setMessages((prev) => [...prev, aiMsg]);
+          // ── STEP 3: Translate AI response → user's selected language ──
+          const translatedResponse =
+            language === "en"
+              ? englishResponse
+              : await translateText(englishResponse, language, "en");
 
-        setIsTyping(false);
+          const aiMsg: Message = {
+            id: Date.now() + 1,
+            role: "ai",
+            content: translatedResponse,
+            references: matchedRefs,
+          };
+
+          setMessages((prev) => [...prev, aiMsg]);
+        } catch (err) {
+          console.error("[NyayaSetu] handleSend error:", err);
+
+          toast({
+            title: "Translation failed",
+            description: "Could not translate. Showing English response.",
+            variant: "destructive",
+          });
+
+          // Fallback: show English response without translation
+          const englishResponse = findLegalAnswer(msg) ?? FALLBACK_RESPONSE;
+          const englishRefs = findLegalReferences(msg);
+
+          setMessages((prev) => [
+            ...prev,
+            {
+              id: Date.now() + 1,
+              role: "ai",
+              content: englishResponse,
+              references: englishRefs,
+            },
+          ]);
+        } finally {
+          setIsTyping(false);
+        }
       }, 1000);
     },
-    [input]
+    [input, language, toast]
   );
 
   const toggleVoiceInput = useCallback(() => {
@@ -132,11 +171,10 @@ const ChatPage = () => {
         description: "Your browser doesn't support speech recognition.",
         variant: "destructive",
       });
-
       return;
     }
 
-    // stop existing recognition
+    // Stop existing recognition session
     if (isListening && recognitionRef.current) {
       recognitionRef.current.stop();
       setIsListening(false);
@@ -151,9 +189,7 @@ const ChatPage = () => {
 
     recognitionRef.current = recognition;
 
-    recognition.onstart = () => {
-      setIsListening(true);
-    };
+    recognition.onstart = () => setIsListening(true);
 
     recognition.onresult = (event: any) => {
       const transcript = Array.from(event.results)
@@ -169,7 +205,6 @@ const ChatPage = () => {
 
     recognition.onerror = () => {
       setIsListening(false);
-
       toast({
         title: "Voice input error",
         description: "Could not recognize speech. Please try again.",
@@ -177,22 +212,19 @@ const ChatPage = () => {
       });
     };
 
-    recognition.onend = () => {
-      setIsListening(false);
-    };
+    recognition.onend = () => setIsListening(false);
 
     recognition.start();
   }, [isListening, language, toast]);
 
   return (
     <div className="flex flex-col h-[calc(100vh-3rem)] max-h-[calc(100vh-3rem)]">
-      {/* Header */}
+      {/* ── Header ── */}
       <div className="flex items-center justify-between px-4 md:px-6 py-3 border-b bg-card">
         <div>
           <h1 className="text-lg font-display font-bold text-foreground">
             NyayaSetu AI
           </h1>
-
           <p className="text-xs text-muted-foreground">
             Ask any legal question in your preferred language
           </p>
@@ -203,7 +235,6 @@ const ChatPage = () => {
             <Globe className="w-3.5 h-3.5 mr-1.5 text-muted-foreground" />
             <SelectValue />
           </SelectTrigger>
-
           <SelectContent>
             {languages.map((lang) => (
               <SelectItem key={lang.value} value={lang.value}>
@@ -214,7 +245,7 @@ const ChatPage = () => {
         </Select>
       </div>
 
-      {/* Messages */}
+      {/* ── Messages ── */}
       <div
         ref={scrollRef}
         className="flex-1 overflow-y-auto px-4 md:px-6 py-4 space-y-4"
@@ -228,19 +259,18 @@ const ChatPage = () => {
             onTranslate={msg.role === "ai" ? () => {} : undefined}
           />
         ))}
-
         {isTyping && <TypingIndicator />}
       </div>
 
-      {/* Disclaimer */}
+      {/* ── Disclaimer ── */}
       <div className="px-4 md:px-6">
         <p className="text-[11px] text-muted-foreground text-center py-1.5 border-t border-dashed">
-          ⚠️ This is AI-generated legal information, not legal advice.
-          Always consult a qualified lawyer.
+          ⚠️ This is AI-generated legal information, not legal advice. Always
+          consult a qualified lawyer.
         </p>
       </div>
 
-      {/* Input */}
+      {/* ── Input Bar ── */}
       <div className="px-4 md:px-6 pb-4 pt-2">
         <form
           onSubmit={(e) => {
@@ -260,9 +290,7 @@ const ChatPage = () => {
             type="button"
             size="icon"
             variant={isListening ? "destructive" : "outline"}
-            className={`h-11 w-11 shrink-0 ${
-              isListening ? "animate-pulse" : ""
-            }`}
+            className={`h-11 w-11 shrink-0 ${isListening ? "animate-pulse" : ""}`}
             onClick={toggleVoiceInput}
           >
             {isListening ? (
@@ -272,11 +300,7 @@ const ChatPage = () => {
             )}
           </Button>
 
-          <Button
-            type="submit"
-            size="icon"
-            className="h-11 w-11 shrink-0"
-          >
+          <Button type="submit" size="icon" className="h-11 w-11 shrink-0">
             <Send className="w-4 h-4" />
           </Button>
         </form>
