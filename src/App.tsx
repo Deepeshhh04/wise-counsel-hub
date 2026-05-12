@@ -9,6 +9,7 @@ import SignupPage from "./pages/SignupPage";
 import ChatPage from "./pages/ChatPage";
 import LawyerConnectPage from "./pages/LawyerConnectPage";
 import DashboardPage from "./pages/DashboardPage";
+import FrameworksPage, { FrameworkDetailPage } from "./pages/FrameworksPage";
 import AppLayout from "./layouts/AppLayout";
 import NotFound from "./pages/NotFound";
 
@@ -29,6 +30,8 @@ const App = () => (
           <Route element={<AppLayout />}>
             <Route path="/chat" element={<ChatPage />} />
             <Route path="/lawyers" element={<LawyerConnectPage />} />
+            <Route path="/frameworks" element={<FrameworksPage />} />
+            <Route path="/frameworks/:slug" element={<FrameworkDetailPage />} />
             <Route path="/dashboard" element={<DashboardPage />} />
           </Route>
 
