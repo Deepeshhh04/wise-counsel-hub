@@ -1,6 +1,3 @@
-<<<<<<< HEAD
-import { MessageSquare, Users, User, LogOut, Scale, FileText } from "lucide-react";
-=======
 import {
   MessageSquare,
   Users,
@@ -10,7 +7,6 @@ import {
   FileText,
 } from "lucide-react";
 
->>>>>>> 221aad9 (Legal agreement added)
 import { NavLink } from "@/components/NavLink";
 
 import {
@@ -30,12 +26,6 @@ import {
 import { Button } from "@/components/ui/button";
 
 const navItems = [
-<<<<<<< HEAD
-  { title: "AI Chat", url: "/chat", icon: MessageSquare },
-  { title: "Lawyer Connect", url: "/lawyers", icon: Users },
-  { title: "Legal Agreements", url: "/frameworks", icon: FileText },
-  { title: "Dashboard", url: "/dashboard", icon: User },
-=======
   {
     title: "AI Chat",
     url: "/chat",
@@ -59,7 +49,6 @@ const navItems = [
     url: "/dashboard",
     icon: User,
   },
->>>>>>> 221aad9 (Legal agreement added)
 ];
 
 export function DashboardSidebar() {
