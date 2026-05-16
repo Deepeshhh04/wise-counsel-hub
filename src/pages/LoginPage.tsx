@@ -6,7 +6,10 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Card, CardContent, CardFooter, CardHeader } from "@/components/ui/card";
 import { useToast } from "@/hooks/use-toast";
+<<<<<<< HEAD
 import { PageTransition } from "@/components/PageTransition";
+=======
+>>>>>>> fc503b4f63079e3e8d2fad1629e4041345ff030b
 
 const LoginPage = () => {
   const [email, setEmail] = useState("");
@@ -15,13 +18,18 @@ const LoginPage = () => {
   const { toast } = useToast();
   const navigate = useNavigate();
 
+<<<<<<< HEAD
   const handleLogin = async (e: React.FormEvent) => {
+=======
+  const handleLogin = (e: React.FormEvent) => {
+>>>>>>> fc503b4f63079e3e8d2fad1629e4041345ff030b
     e.preventDefault();
     if (!email || !password) {
       toast({ title: "Please fill in all fields", variant: "destructive" });
       return;
     }
     setLoading(true);
+<<<<<<< HEAD
     
     try {
       const res = await fetch("http://localhost:8080/api/auth/login", {
@@ -61,10 +69,30 @@ const LoginPage = () => {
           <div>
             <h1 className="text-3xl font-display font-black text-white tracking-tight">Welcome Back</h1>
             <p className="text-white/40 text-[10px] font-black uppercase tracking-[0.3em] mt-2">NyayaSetu Secure Login</p>
+=======
+    // Placeholder: POST /api/auth/login
+    setTimeout(() => {
+      setLoading(false);
+      navigate("/chat");
+    }, 1000);
+  };
+
+  return (
+    <div className="min-h-screen flex items-center justify-center bg-background px-4">
+      <Card className="w-full max-w-md shadow-xl border-border/50">
+        <CardHeader className="text-center space-y-3 pb-2">
+          <div className="mx-auto w-14 h-14 rounded-2xl bg-primary flex items-center justify-center">
+            <Scale className="w-7 h-7 text-primary-foreground" />
+          </div>
+          <div>
+            <h1 className="text-2xl font-display font-bold text-foreground">Welcome Back</h1>
+            <p className="text-sm text-muted-foreground mt-1">Sign in to your NyayaSetu account</p>
+>>>>>>> fc503b4f63079e3e8d2fad1629e4041345ff030b
           </div>
         </CardHeader>
 
         <form onSubmit={handleLogin}>
+<<<<<<< HEAD
           <CardContent className="space-y-6 px-10">
             <div className="space-y-2">
               <Label htmlFor="email" className="text-white/60 font-black text-[10px] uppercase tracking-widest ml-1">Identity</Label>
@@ -78,10 +106,26 @@ const LoginPage = () => {
               <div className="relative group">
                 <Lock className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-white/20 group-focus-within:text-saffron transition-colors" />
                 <Input id="password" type="password" placeholder="••••••••" value={password} onChange={(e) => setPassword(e.target.value)} className="h-14 pl-12 bg-white/5 border-white/10 text-white placeholder:text-white/20 focus:border-saffron/40 focus:ring-0 rounded-2xl transition-all" />
+=======
+          <CardContent className="space-y-4">
+            <div className="space-y-2">
+              <Label htmlFor="email">Email</Label>
+              <div className="relative">
+                <Mail className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground" />
+                <Input id="email" type="email" placeholder="you@example.com" value={email} onChange={(e) => setEmail(e.target.value)} className="pl-9" />
+              </div>
+            </div>
+            <div className="space-y-2">
+              <Label htmlFor="password">Password</Label>
+              <div className="relative">
+                <Lock className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground" />
+                <Input id="password" type="password" placeholder="••••••••" value={password} onChange={(e) => setPassword(e.target.value)} className="pl-9" />
+>>>>>>> fc503b4f63079e3e8d2fad1629e4041345ff030b
               </div>
             </div>
           </CardContent>
 
+<<<<<<< HEAD
           <CardFooter className="flex flex-col gap-6 p-10 pt-8">
             <Button type="submit" className="w-full h-14 gap-3 shadow-2xl shadow-saffron/10 hover:shadow-saffron/30 hover:-translate-y-1 transition-all rounded-2xl font-black bg-white text-navy hover:bg-saffron hover:text-navy" disabled={loading}>
               {loading ? "Decrypting..." : "Access Dashboard"}
@@ -90,11 +134,25 @@ const LoginPage = () => {
             <p className="text-sm text-white/40 font-bold">
               New here?{" "}
               <Link to="/signup" className="text-saffron hover:text-white transition-all">Create Identity</Link>
+=======
+          <CardFooter className="flex flex-col gap-3">
+            <Button type="submit" className="w-full gap-2" disabled={loading}>
+              {loading ? "Signing in..." : "Sign In"}
+              {!loading && <ArrowRight className="w-4 h-4" />}
+            </Button>
+            <p className="text-sm text-muted-foreground">
+              Don't have an account?{" "}
+              <Link to="/signup" className="text-primary font-medium hover:underline">Sign up</Link>
+>>>>>>> fc503b4f63079e3e8d2fad1629e4041345ff030b
             </p>
           </CardFooter>
         </form>
       </Card>
+<<<<<<< HEAD
     </PageTransition>
+=======
+    </div>
+>>>>>>> fc503b4f63079e3e8d2fad1629e4041345ff030b
   );
 };
 

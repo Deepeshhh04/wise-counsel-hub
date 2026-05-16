@@ -1,7 +1,11 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 
 import { useState, useRef, useEffect, useCallback } from "react";
+<<<<<<< HEAD
 import { Send, Globe, Mic, MicOff, Scale } from "lucide-react";
+=======
+import { Send, Globe, Mic, MicOff } from "lucide-react";
+>>>>>>> fc503b4f63079e3e8d2fad1629e4041345ff030b
 
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -64,9 +68,12 @@ const langCodes: Record<string, string> = {
   mr: "mr-IN",
 };
 
+<<<<<<< HEAD
 import { motion, AnimatePresence } from "framer-motion";
 import { PageTransition } from "@/components/PageTransition";
 
+=======
+>>>>>>> fc503b4f63079e3e8d2fad1629e4041345ff030b
 const ChatPage = () => {
   const [messages, setMessages] = useState<Message[]>(sampleMessages);
   const [input, setInput] = useState("");
@@ -104,15 +111,30 @@ const ChatPage = () => {
 
       setTimeout(async () => {
         try {
+<<<<<<< HEAD
           const englishQuestion =
             language === "en"
               ? msg
               : await translateText(msg, "en", language);
           
+=======
+          // ── STEP 1: Translate user question → English for dataset matching ──
+          // detectInputLanguage checks for non-Latin script (Hindi, Bengali etc.)
+          // and passes "auto" so MyMemory detects the source language correctly.
+const englishQuestion =
+  language === "en"
+    ? msg
+    : await translateText(msg, "en", language); // pass actual language code, not "auto"
+          console.log("[NyayaSetu] English question:", englishQuestion);
+
+          // ── STEP 2: Search the dataset using the English question ──
+          // findLegalAnswer returns string|null — use ?? to fall back
+>>>>>>> fc503b4f63079e3e8d2fad1629e4041345ff030b
           const matchedAnswer = findLegalAnswer(englishQuestion);
           const matchedRefs = findLegalReferences(englishQuestion);
           const englishResponse = matchedAnswer ?? FALLBACK_RESPONSE;
 
+<<<<<<< HEAD
           // Save query to backend asynchronously
           const detectedCategory = matchedRefs.length > 0 ? matchedRefs[0].split(' ')[0] : "General";
           const storedUser = localStorage.getItem("nyaya_user");
@@ -129,6 +151,9 @@ const ChatPage = () => {
             })
           }).catch(console.error);
 
+=======
+          // ── STEP 3: Translate AI response → user's selected language ──
+>>>>>>> fc503b4f63079e3e8d2fad1629e4041345ff030b
           const translatedResponse =
             language === "en"
               ? englishResponse
@@ -144,6 +169,17 @@ const ChatPage = () => {
           setMessages((prev) => [...prev, aiMsg]);
         } catch (err) {
           console.error("[NyayaSetu] handleSend error:", err);
+<<<<<<< HEAD
+=======
+
+          toast({
+            title: "Translation failed",
+            description: "Could not translate. Showing English response.",
+            variant: "destructive",
+          });
+
+          // Fallback: show English response without translation
+>>>>>>> fc503b4f63079e3e8d2fad1629e4041345ff030b
           const englishResponse = findLegalAnswer(msg) ?? FALLBACK_RESPONSE;
           const englishRefs = findLegalReferences(msg);
 
@@ -178,6 +214,10 @@ const ChatPage = () => {
       return;
     }
 
+<<<<<<< HEAD
+=======
+    // Stop existing recognition session
+>>>>>>> fc503b4f63079e3e8d2fad1629e4041345ff030b
     if (isListening && recognitionRef.current) {
       recognitionRef.current.stop();
       setIsListening(false);
@@ -185,25 +225,60 @@ const ChatPage = () => {
     }
 
     const recognition = new SpeechRecognitionAPI();
+<<<<<<< HEAD
     recognition.lang = langCodes[language] || "en-IN";
     recognition.interimResults = true;
     recognition.continuous = false;
     recognitionRef.current = recognition;
 
     recognition.onstart = () => setIsListening(true);
+=======
+
+    recognition.lang = langCodes[language] || "en-IN";
+    recognition.interimResults = true;
+    recognition.continuous = false;
+
+    recognitionRef.current = recognition;
+
+    recognition.onstart = () => setIsListening(true);
+
+>>>>>>> fc503b4f63079e3e8d2fad1629e4041345ff030b
     recognition.onresult = (event: any) => {
       const transcript = Array.from(event.results)
         .map((r: any) => r[0].transcript)
         .join("");
+<<<<<<< HEAD
       setInput(transcript);
       if (event.results[0].isFinal) setIsListening(false);
     };
     recognition.onerror = () => setIsListening(false);
     recognition.onend = () => setIsListening(false);
+=======
+
+      setInput(transcript);
+
+      if (event.results[0].isFinal) {
+        setIsListening(false);
+      }
+    };
+
+    recognition.onerror = () => {
+      setIsListening(false);
+      toast({
+        title: "Voice input error",
+        description: "Could not recognize speech. Please try again.",
+        variant: "destructive",
+      });
+    };
+
+    recognition.onend = () => setIsListening(false);
+
+>>>>>>> fc503b4f63079e3e8d2fad1629e4041345ff030b
     recognition.start();
   }, [isListening, language, toast]);
 
   return (
+<<<<<<< HEAD
     <PageTransition className="flex flex-col h-[calc(100vh-3.5rem)] max-h-[calc(100vh-3.5rem)] relative bg-navy overflow-hidden">
       {/* Background Blobs */}
       <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-primary/20 blur-[150px] rounded-full pointer-events-none" />
@@ -236,6 +311,28 @@ const ChatPage = () => {
           <SelectContent className="bg-navy border-white/10 text-white backdrop-blur-3xl rounded-xl">
             {languages.map((lang) => (
               <SelectItem key={lang.value} value={lang.value} className="hover:bg-white/5 transition-colors">
+=======
+    <div className="flex flex-col h-[calc(100vh-3rem)] max-h-[calc(100vh-3rem)]">
+      {/* ── Header ── */}
+      <div className="flex items-center justify-between px-4 md:px-6 py-3 border-b bg-card">
+        <div>
+          <h1 className="text-lg font-display font-bold text-foreground">
+            NyayaSetu AI
+          </h1>
+          <p className="text-xs text-muted-foreground">
+            Ask any legal question in your preferred language
+          </p>
+        </div>
+
+        <Select value={language} onValueChange={setLanguage}>
+          <SelectTrigger className="w-[160px] h-9">
+            <Globe className="w-3.5 h-3.5 mr-1.5 text-muted-foreground" />
+            <SelectValue />
+          </SelectTrigger>
+          <SelectContent>
+            {languages.map((lang) => (
+              <SelectItem key={lang.value} value={lang.value}>
+>>>>>>> fc503b4f63079e3e8d2fad1629e4041345ff030b
                 {lang.label}
               </SelectItem>
             ))}
@@ -246,6 +343,7 @@ const ChatPage = () => {
       {/* ── Messages ── */}
       <div
         ref={scrollRef}
+<<<<<<< HEAD
         className="flex-1 overflow-y-auto px-4 md:px-10 py-8 space-y-8 scroll-smooth"
       >
         <AnimatePresence initial={false}>
@@ -320,6 +418,66 @@ const ChatPage = () => {
         </motion.div>
       </div>
     </PageTransition>
+=======
+        className="flex-1 overflow-y-auto px-4 md:px-6 py-4 space-y-4"
+      >
+        {messages.map((msg) => (
+          <ChatMessage
+            key={msg.id}
+            role={msg.role}
+            content={msg.content}
+            references={msg.references}
+            onTranslate={msg.role === "ai" ? () => {} : undefined}
+          />
+        ))}
+        {isTyping && <TypingIndicator />}
+      </div>
+
+      {/* ── Disclaimer ── */}
+      <div className="px-4 md:px-6">
+        <p className="text-[11px] text-muted-foreground text-center py-1.5 border-t border-dashed">
+          ⚠️ This is AI-generated legal information, not legal advice. Always
+          consult a qualified lawyer.
+        </p>
+      </div>
+
+      {/* ── Input Bar ── */}
+      <div className="px-4 md:px-6 pb-4 pt-2">
+        <form
+          onSubmit={(e) => {
+            e.preventDefault();
+            handleSend();
+          }}
+          className="flex gap-2"
+        >
+          <Input
+            value={input}
+            onChange={(e) => setInput(e.target.value)}
+            placeholder="Ask a legal question..."
+            className="flex-1 h-11 bg-card"
+          />
+
+          <Button
+            type="button"
+            size="icon"
+            variant={isListening ? "destructive" : "outline"}
+            className={`h-11 w-11 shrink-0 ${isListening ? "animate-pulse" : ""}`}
+            onClick={toggleVoiceInput}
+          >
+            {isListening ? (
+              <MicOff className="w-4 h-4" />
+            ) : (
+              <Mic className="w-4 h-4" />
+            )}
+          </Button>
+
+          <Button type="submit" size="icon" className="h-11 w-11 shrink-0">
+            <Send className="w-4 h-4" />
+          </Button>
+        </form>
+      </div>
+    </div>
+>>>>>>> fc503b4f63079e3e8d2fad1629e4041345ff030b
   );
 };
 

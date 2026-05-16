@@ -1,5 +1,19 @@
+<<<<<<< HEAD
 import { MessageSquare, Users, User, LogOut, Scale, ShieldCheck, FileText } from "lucide-react";
 import { NavLink } from "@/components/NavLink";
+=======
+import {
+  MessageSquare,
+  Users,
+  User,
+  LogOut,
+  Scale,
+  FileText,
+} from "lucide-react";
+
+import { NavLink } from "@/components/NavLink";
+
+>>>>>>> fc503b4f63079e3e8d2fad1629e4041345ff030b
 import {
   Sidebar,
   SidebarContent,
@@ -13,6 +27,7 @@ import {
   SidebarFooter,
   useSidebar,
 } from "@/components/ui/sidebar";
+<<<<<<< HEAD
 import { Button } from "@/components/ui/button";
 import { motion } from "framer-motion";
 
@@ -22,10 +37,40 @@ const navItems = [
   { title: "Lawyer Connect", url: "/lawyers", icon: Users },
   { title: "Verify as Lawyer", url: "/verify-lawyer", icon: ShieldCheck },
   { title: "Dashboard", url: "/dashboard", icon: User },
+=======
+
+import { Button } from "@/components/ui/button";
+
+const navItems = [
+  {
+    title: "AI Chat",
+    url: "/chat",
+    icon: MessageSquare,
+  },
+
+  {
+    title: "Lawyer Connect",
+    url: "/lawyers",
+    icon: Users,
+  },
+
+  {
+    title: "Legal Agreements",
+    url: "/frameworks",
+    icon: FileText,
+  },
+
+  {
+    title: "Dashboard",
+    url: "/dashboard",
+    icon: User,
+  },
+>>>>>>> fc503b4f63079e3e8d2fad1629e4041345ff030b
 ];
 
 export function DashboardSidebar() {
   const { state } = useSidebar();
+<<<<<<< HEAD
   const collapsed = state === "collapsed";
 
   return (
@@ -45,10 +90,30 @@ export function DashboardSidebar() {
             </span>
           )}
         </motion.div>
+=======
+
+  const collapsed = state === "collapsed";
+
+  return (
+    <Sidebar collapsible="icon">
+      <SidebarHeader className="p-4">
+        <div className="flex items-center gap-2.5">
+          <div className="w-8 h-8 rounded-lg bg-sidebar-primary flex items-center justify-center">
+            <Scale className="w-4 h-4 text-sidebar-primary-foreground" />
+          </div>
+
+          {!collapsed && (
+            <span className="font-display font-bold text-sidebar-foreground text-lg">
+              NyayaSetu
+            </span>
+          )}
+        </div>
+>>>>>>> fc503b4f63079e3e8d2fad1629e4041345ff030b
       </SidebarHeader>
 
       <SidebarContent>
         <SidebarGroup>
+<<<<<<< HEAD
           <SidebarGroupLabel className="px-4 text-[10px] uppercase tracking-[0.2em] text-sidebar-foreground/40 font-bold">
             Main Menu
           </SidebarGroupLabel>
@@ -77,6 +142,29 @@ export function DashboardSidebar() {
                         />
                       </NavLink>
                     </motion.div>
+=======
+          <SidebarGroupLabel>
+            Navigation
+          </SidebarGroupLabel>
+
+          <SidebarGroupContent>
+            <SidebarMenu>
+              {navItems.map((item) => (
+                <SidebarMenuItem key={item.title}>
+                  <SidebarMenuButton asChild>
+                    <NavLink
+                      to={item.url}
+                      end
+                      className="hover:bg-sidebar-accent"
+                      activeClassName="bg-sidebar-accent text-sidebar-primary font-medium"
+                    >
+                      <item.icon className="mr-2 h-4 w-4" />
+
+                      {!collapsed && (
+                        <span>{item.title}</span>
+                      )}
+                    </NavLink>
+>>>>>>> fc503b4f63079e3e8d2fad1629e4041345ff030b
                   </SidebarMenuButton>
                 </SidebarMenuItem>
               ))}
@@ -85,6 +173,7 @@ export function DashboardSidebar() {
         </SidebarGroup>
       </SidebarContent>
 
+<<<<<<< HEAD
       <SidebarFooter className="p-4 border-t border-sidebar-border/30">
         <Button
           variant="ghost"
@@ -93,8 +182,25 @@ export function DashboardSidebar() {
         >
           <LogOut className="mr-3 h-4 w-4 shrink-0 group-hover:-translate-x-0.5 transition-transform" />
           {!collapsed && <span className="text-sm font-medium">Logout</span>}
+=======
+      <SidebarFooter className="p-3">
+        <Button
+          variant="ghost"
+          className="w-full justify-start text-sidebar-foreground/70 hover:text-sidebar-foreground hover:bg-sidebar-accent"
+          onClick={() => {
+            // placeholder logout
+          }}
+        >
+          <LogOut className="mr-2 h-4 w-4" />
+
+          {!collapsed && "Logout"}
+>>>>>>> fc503b4f63079e3e8d2fad1629e4041345ff030b
         </Button>
       </SidebarFooter>
     </Sidebar>
   );
+<<<<<<< HEAD
 }
+=======
+}
+>>>>>>> fc503b4f63079e3e8d2fad1629e4041345ff030b
