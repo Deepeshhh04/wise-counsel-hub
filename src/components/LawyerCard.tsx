@@ -1,11 +1,19 @@
-<<<<<<< HEAD
-import { Star, MapPin, Briefcase, Phone, ShieldCheck } from "lucide-react";
-=======
-import { Star, MapPin, Briefcase, Phone } from "lucide-react";
->>>>>>> fc503b4f63079e3e8d2fad1629e4041345ff030b
-import { Card, CardContent } from "@/components/ui/card";
+import {
+  Star,
+  MapPin,
+  Briefcase,
+  Phone,
+  ShieldCheck,
+} from "lucide-react";
+
+import { motion } from "framer-motion";
+
+import {
+  Card,
+  CardContent,
+} from "@/components/ui/card";
+
 import { Button } from "@/components/ui/button";
-import { Badge } from "@/components/ui/badge";
 
 interface LawyerCardProps {
   name: string;
@@ -14,50 +22,85 @@ interface LawyerCardProps {
   rating: number;
   city: string;
   state: string;
-<<<<<<< HEAD
   verified?: boolean;
   profilePhotoUrl?: string;
 }
 
-import { motion } from "framer-motion";
-
-const LawyerCard = ({ name, experience, specialization, rating, city, state, verified, profilePhotoUrl }: LawyerCardProps) => (
+const LawyerCard = ({
+  name,
+  experience,
+  specialization,
+  rating,
+  city,
+  state,
+  verified,
+  profilePhotoUrl,
+}: LawyerCardProps) => (
   <motion.div
     whileHover={{ y: -8 }}
-    transition={{ type: "spring", stiffness: 300, damping: 20 }}
+    transition={{
+      type: "spring",
+      stiffness: 300,
+      damping: 20,
+    }}
   >
     <Card className="group transition-all duration-300 border-border/60 bg-card/40 backdrop-blur-md overflow-hidden relative shadow-premium hover:shadow-2xl hover:shadow-primary/5">
       <div className="absolute inset-0 bg-gradient-to-br from-primary/5 via-transparent to-accent/5 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+
       <CardContent className="p-6 space-y-6 relative z-10">
         <div className="flex items-start justify-between">
           <div className="flex items-center gap-4">
-            <motion.div 
-              whileHover={{ rotate: 5, scale: 1.05 }}
+            <motion.div
+              whileHover={{
+                rotate: 5,
+                scale: 1.05,
+              }}
               className="w-14 h-14 rounded-2xl bg-gradient-to-br from-primary/10 to-primary/5 flex items-center justify-center text-primary font-bold text-xl shadow-inner border border-primary/10 overflow-hidden"
             >
               {profilePhotoUrl ? (
-                <img src={profilePhotoUrl} alt={name} className="w-full h-full object-cover" />
+                <img
+                  src={profilePhotoUrl}
+                  alt={name}
+                  className="w-full h-full object-cover"
+                />
               ) : (
-                name.replace(/^Adv\.\s+/i, '').charAt(0)
+                name
+                  .replace(/^Adv\.\s+/i, "")
+                  .charAt(0)
               )}
             </motion.div>
+
             <div>
               <div className="flex items-center gap-2">
-                <h3 className="font-display font-bold text-lg text-foreground group-hover:text-primary transition-colors tracking-tight">{name}</h3>
+                <h3 className="font-display font-bold text-lg text-foreground group-hover:text-primary transition-colors tracking-tight">
+                  {name}
+                </h3>
+
                 {verified && (
                   <div className="relative group/badge">
                     <ShieldCheck className="w-5 h-5 text-secondary animate-pulse-slow" />
+
                     <div className="absolute inset-0 bg-secondary blur-lg opacity-20 animate-pulse" />
-                    <div className="absolute -top-8 left-1/2 -translate-x-1/2 bg-secondary text-white text-[8px] font-bold px-1.5 py-0.5 rounded opacity-0 group-hover/badge:opacity-100 transition-opacity pointer-events-none uppercase tracking-tighter">Verified</div>
+
+                    <div className="absolute -top-8 left-1/2 -translate-x-1/2 bg-secondary text-white text-[8px] font-bold px-1.5 py-0.5 rounded opacity-0 group-hover/badge:opacity-100 transition-opacity pointer-events-none uppercase tracking-tighter">
+                      Verified
+                    </div>
                   </div>
                 )}
               </div>
-              <p className="text-xs text-muted-foreground font-semibold uppercase tracking-wider opacity-70">{experience} Experience</p>
+
+              <p className="text-xs text-muted-foreground font-semibold uppercase tracking-wider opacity-70">
+                {experience} Experience
+              </p>
             </div>
           </div>
+
           <div className="flex items-center gap-1.5 bg-legal-gold/10 px-3 py-1.5 rounded-xl text-legal-gold border border-legal-gold/20 shadow-sm">
             <Star className="w-3.5 h-3.5 fill-current" />
-            <span className="text-sm font-black tracking-tighter">{rating}</span>
+
+            <span className="text-sm font-black tracking-tighter">
+              {rating}
+            </span>
           </div>
         </div>
 
@@ -66,13 +109,20 @@ const LawyerCard = ({ name, experience, specialization, rating, city, state, ver
             <div className="w-8 h-8 rounded-lg bg-secondary/50 flex items-center justify-center">
               <Briefcase className="w-4 h-4 text-primary/60" />
             </div>
-            <span className="font-medium text-xs truncate">{specialization}</span>
+
+            <span className="font-medium text-xs truncate">
+              {specialization}
+            </span>
           </div>
+
           <div className="flex items-center gap-2.5 text-sm text-muted-foreground/80">
             <div className="w-8 h-8 rounded-lg bg-secondary/50 flex items-center justify-center">
               <MapPin className="w-4 h-4 text-primary/60" />
             </div>
-            <span className="font-medium text-xs truncate">{city}</span>
+
+            <span className="font-medium text-xs truncate">
+              {city}, {state}
+            </span>
           </div>
         </div>
 
@@ -83,46 +133,6 @@ const LawyerCard = ({ name, experience, specialization, rating, city, state, ver
       </CardContent>
     </Card>
   </motion.div>
-=======
-}
-
-const LawyerCard = ({ name, experience, specialization, rating, city, state }: LawyerCardProps) => (
-  <Card className="group hover:shadow-lg transition-all duration-300 border-border/60">
-    <CardContent className="p-5 space-y-4">
-      <div className="flex items-start justify-between">
-        <div className="flex items-center gap-3">
-          <div className="w-12 h-12 rounded-full bg-primary/10 flex items-center justify-center text-primary font-semibold text-lg">
-            {name.charAt(0)}
-          </div>
-          <div>
-            <h3 className="font-semibold text-foreground">{name}</h3>
-            <p className="text-sm text-muted-foreground">{experience} experience</p>
-          </div>
-        </div>
-        <div className="flex items-center gap-1 text-legal-gold">
-          <Star className="w-4 h-4 fill-current" />
-          <span className="text-sm font-medium">{rating}</span>
-        </div>
-      </div>
-
-      <div className="space-y-2">
-        <div className="flex items-center gap-2 text-sm text-muted-foreground">
-          <Briefcase className="w-3.5 h-3.5" />
-          <Badge variant="secondary" className="font-normal">{specialization}</Badge>
-        </div>
-        <div className="flex items-center gap-2 text-sm text-muted-foreground">
-          <MapPin className="w-3.5 h-3.5" />
-          <span>{city}, {state}</span>
-        </div>
-      </div>
-
-      <Button className="w-full gap-2" size="sm">
-        <Phone className="w-3.5 h-3.5" />
-        Contact Lawyer
-      </Button>
-    </CardContent>
-  </Card>
->>>>>>> fc503b4f63079e3e8d2fad1629e4041345ff030b
 );
 
 export default LawyerCard;

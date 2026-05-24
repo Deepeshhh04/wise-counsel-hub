@@ -1,5 +1,4 @@
 import { Link } from "react-router-dom";
-<<<<<<< HEAD
 import {
   Scale,
   MessageSquare,
@@ -44,17 +43,18 @@ const Index = () => {
     <PageTransition className="min-h-[75vh] relative overflow-hidden">
 
       {/* NAVBAR */}
-      <nav className="flex items-center justify-between px-6 md:px-12 py-5 bg-[#F5F1E8] text-white sticky top-0 z-50 shadow-xl">
+      <nav className="flex items-center justify-between px-6 md:px-12 py-5 bg-[#F5F1E8] sticky top-0 z-50 shadow-xl">
         <div className="flex items-center gap-3">
           <div className="w-12 h-12 rounded-2xl bg-gradient-to-br from-orange-400 via-orange-500 to-yellow-500 flex items-center justify-center shadow-lg">
             <Scale className="w-6 h-6 text-white" />
           </div>
 
           <div>
-            <h1 className="text-3xl font-black tracking-tight">
+            <h1 className="text-3xl font-black tracking-tight text-[#0B1C3F]">
               NyayaSetu
             </h1>
-            <p className="text-xs text-gray-300 tracking-widest uppercase">
+
+            <p className="text-xs text-gray-500 tracking-widest uppercase">
               Bharat Legal AI
             </p>
           </div>
@@ -63,7 +63,7 @@ const Index = () => {
         <div className="flex items-center gap-4">
           <Button
             variant="ghost"
-            className="text-white hover:bg-white/10"
+            className="text-[#0B1C3F] hover:bg-black/5"
             asChild
           >
             <Link to="/login">Sign In</Link>
@@ -78,31 +78,31 @@ const Index = () => {
         </div>
       </nav>
 
-      {/* HERO SECTION */}
-      <section className="relative overflow-hidden">
+      {/* HERO */}
+      <section className="relative overflow-hidden py-16 px-6">
+
+        <div className="absolute inset-0 -z-10">
+          <img
+            src="/hero-lawyer.jpg"
+            alt="Legal Background"
+            className="w-full h-full object-cover opacity-30"
+          />
+          <div className="absolute inset-0 bg-[#F5F1EA]/55"></div>
+        </div>
 
         <div className="absolute top-0 left-0 w-96 h-96 bg-orange-500/20 blur-3xl rounded-full"></div>
         <div className="absolute bottom-0 right-0 w-96 h-96 bg-green-500/20 blur-3xl rounded-full"></div>
 
         <div className="max-w-7xl mx-auto text-center relative z-10">
 
-          <Badge className="mb-8 bg-white/10 text-orange-300 border border-orange-300/30 px-6 py-2 text-sm tracking-widest uppercase">
+          <Badge className="mb-8 bg-white/80 text-orange-500 border border-orange-300/30 px-6 py-2 text-sm tracking-widest uppercase">
             🇮🇳 Bharat's AI Legal Assistant
           </Badge>
-          <div className="absolute inset-0 -z-10">
-            <img
-              src="/hero-lawyer.jpg"
-              alt="Legal Background"
-              className="w-full h-full object-cover opacity-30"
-            />
-            <div className="absolute inset-0 bg-[#F5F1EA]/55"></div>
-          </div>
 
           <motion.h1
-
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
-            className="relative z-10 text-4xl md:text-6xl font-black tracking-tight leading-tight"
+            className="text-4xl md:text-6xl font-black tracking-tight leading-tight"
           >
             <span className="text-[#0B1C3F] drop-shadow-lg">
               Justice.
@@ -111,12 +111,11 @@ const Index = () => {
             </span>
           </motion.h1>
 
-
           <motion.p
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ delay: 0.2 }}
-            className="mt-6 text-xl md:text-2xl text-white max-w-4xl mx-auto leading-relaxed drop-shadow-lg"
+            className="mt-6 text-lg md:text-xl text-[#0B1C3F] max-w-4xl mx-auto leading-relaxed"
           >
             AI-powered legal guidance, lawyer verification,
             multilingual assistance, and verified legal experts —
@@ -139,14 +138,13 @@ const Index = () => {
             <Button
               size="lg"
               variant="outline"
-              className="border-white text-white hover:bg-white hover:text-[#F5F1E8] px-10 py-7 text-lg rounded-2xl"
+              className="border border-[#D6D3D1] bg-white text-[#0B1C3F] hover:bg-[#F5F1E8] px-10 py-7 text-lg rounded-2xl"
               asChild
             >
               <Link to="/lawyers">
                 Find Verified Lawyers
               </Link>
             </Button>
-
           </div>
         </div>
       </section>
@@ -160,15 +158,15 @@ const Index = () => {
             {features.map((feature) => (
               <Card
                 key={feature.title}
-                className="rounded-3xl border-0 shadow-xl hover:shadow-2xl transition-all duration-300 hover:-translate-y-2"
+                className="rounded-3xl border border-[#E5E7EB] shadow-xl hover:shadow-2xl transition-all duration-300 hover:-translate-y-2"
               >
                 <CardContent className="p-10">
 
-                  <div className="w-16 h-16 rounded-2xl bg-[#F5F1E8] text-white flex items-center justify-center mb-6">
-                    <feature.icon className="w-8 h-8 text-white" />
+                  <div className="w-16 h-16 rounded-2xl bg-[#F5F1E8] flex items-center justify-center mb-6">
+                    <feature.icon className="w-8 h-8 text-[#0B1C3F]" />
                   </div>
 
-                  <h3 className="text-2xl font-black text-[#F5F1E8] mb-4">
+                  <h3 className="text-2xl font-black text-[#0B1C3F] mb-4">
                     {feature.title}
                   </h3>
 
@@ -185,7 +183,7 @@ const Index = () => {
       </section>
 
       {/* WHY NYAYASETU */}
-      <section className="bg-[#F5F1E8] py-24 px-6 text-white">
+      <section className="bg-[#F5F1E8] py-24 px-6">
 
         <div className="max-w-7xl mx-auto">
 
@@ -195,9 +193,9 @@ const Index = () => {
               Why Choose Us
             </Badge>
 
-            <h2 className="text-3xl md:text-4xl font-black leading-tight">
+            <h2 className="text-3xl md:text-5xl font-black leading-tight text-[#0B1C3F]">
               India's Trusted
-              <span className="text-orange-400"> Legal Ecosystem</span>
+              <span className="text-orange-500"> Legal Ecosystem</span>
             </h2>
 
           </div>
@@ -223,18 +221,18 @@ const Index = () => {
             ].map((item, index) => (
               <div
                 key={index}
-                className="bg-white/5 border border-white/10 rounded-3xl p-10 hover:bg-white/10 transition-all"
+                className="bg-white border border-[#E5E7EB] rounded-3xl p-10 shadow-lg hover:shadow-2xl transition-all"
               >
 
                 <div className="w-16 h-16 rounded-2xl bg-orange-500 flex items-center justify-center mb-6">
                   <item.icon className="w-8 h-8 text-white" />
                 </div>
 
-                <h3 className="text-2xl font-black mb-4">
+                <h3 className="text-2xl font-black mb-4 text-[#0B1C3F]">
                   {item.title}
                 </h3>
 
-                <p className="text-gray-300 text-lg leading-relaxed">
+                <p className="text-gray-600 text-lg leading-relaxed">
                   {item.desc}
                 </p>
 
@@ -252,11 +250,11 @@ const Index = () => {
 
           <div className="flex justify-center mb-6">
             <div className="w-14 h-14 rounded-2xl bg-[#F5F1E8] flex items-center justify-center">
-              <Scale className="text-white w-7 h-7" />
+              <Scale className="text-[#0B1C3F] w-7 h-7" />
             </div>
           </div>
 
-          <h3 className="text-3xl font-black text-[#F5F1E8]">
+          <h3 className="text-3xl font-black text-[#0B1C3F]">
             NyayaSetu
           </h3>
 
@@ -272,86 +270,8 @@ const Index = () => {
 
         </div>
       </footer>
-    </PageTransition >
+    </PageTransition>
   );
 };
 
 export default Index;
-
-=======
-import { Scale, MessageSquare, Users, Shield, ArrowRight } from "lucide-react";
-import { Button } from "@/components/ui/button";
-import { Card, CardContent } from "@/components/ui/card";
-
-const features = [
-  { icon: MessageSquare, title: "AI Legal Chat", description: "Get instant answers to your legal questions in multiple languages" },
-  { icon: Users, title: "Lawyer Connect", description: "Find and connect with verified lawyers across India" },
-  { icon: Shield, title: "Trusted Information", description: "AI-powered responses backed by Indian legal references" },
-];
-
-const Index = () => (
-  <div className="min-h-screen bg-background">
-    {/* Nav */}
-    <nav className="flex items-center justify-between px-6 py-4 border-b bg-card">
-      <div className="flex items-center gap-2.5">
-        <div className="w-9 h-9 rounded-xl bg-primary flex items-center justify-center">
-          <Scale className="w-5 h-5 text-primary-foreground" />
-        </div>
-        <span className="font-display font-bold text-xl text-foreground">NyayaSetu</span>
-      </div>
-      <div className="flex gap-2">
-        <Button variant="ghost" asChild><Link to="/login">Sign In</Link></Button>
-        <Button asChild><Link to="/signup">Get Started</Link></Button>
-      </div>
-    </nav>
-
-    {/* Hero */}
-    <section className="max-w-4xl mx-auto text-center px-6 pt-20 pb-16">
-      <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-primary/10 text-primary text-sm font-medium mb-6">
-        <Scale className="w-4 h-4" />
-        Multilingual Legal AI Assistant
-      </div>
-      <h1 className="text-4xl md:text-5xl lg:text-6xl font-display font-bold text-foreground leading-tight">
-        Your AI-Powered
-        <br />
-        <span className="text-primary">Legal Companion</span>
-      </h1>
-      <p className="text-lg text-muted-foreground mt-5 max-w-2xl mx-auto leading-relaxed">
-        Get instant legal information in your language, connect with verified lawyers, and navigate India's legal system with confidence.
-      </p>
-      <div className="flex flex-col sm:flex-row gap-3 justify-center mt-8">
-        <Button size="lg" className="gap-2 text-base px-8" asChild>
-          <Link to="/chat">Start Chatting <ArrowRight className="w-4 h-4" /></Link>
-        </Button>
-        <Button size="lg" variant="outline" className="gap-2 text-base px-8" asChild>
-          <Link to="/lawyers">Find a Lawyer</Link>
-        </Button>
-      </div>
-    </section>
-
-    {/* Features */}
-    <section className="max-w-5xl mx-auto px-6 pb-20">
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
-        {features.map((f) => (
-          <Card key={f.title} className="border-border/50 hover:shadow-lg transition-shadow">
-            <CardContent className="p-6 space-y-3">
-              <div className="w-11 h-11 rounded-xl bg-primary/10 flex items-center justify-center text-primary">
-                <f.icon className="w-5 h-5" />
-              </div>
-              <h3 className="font-semibold text-foreground text-lg">{f.title}</h3>
-              <p className="text-sm text-muted-foreground leading-relaxed">{f.description}</p>
-            </CardContent>
-          </Card>
-        ))}
-      </div>
-    </section>
-
-    {/* Footer */}
-    <footer className="border-t py-6 text-center text-xs text-muted-foreground">
-      © 2026 NyayaSetu. AI-generated legal information, not legal advice.
-    </footer>
-  </div>
-);
-
-export default Index;
->>>>>>> fc503b4f63079e3e8d2fad1629e4041345ff030b
