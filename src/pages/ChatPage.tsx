@@ -53,7 +53,7 @@ const sampleMessages: Message[] = [
     id: 2,
     role: "ai",
     content:
-      "Under the Negotiable Instruments Act, 1881, a cheque bounce is a criminal offence under Section 138.",
+      "Under Section 138 of the Negotiable Instruments Act, 1881, cheque bounce is a criminal offence. The drawer may face imprisonment up to 2 years, or a fine up to twice the cheque amount, or both. The payee must send a legal notice within 30 days of receiving the return memo from the bank, and if the drawer fails to pay within 15 days, a complaint can be filed in court.",
     references: [
       "NI Act Section 138",
       "NI Act Section 141",
