@@ -1,0 +1,22 @@
+### Submit Lawyer Verification
+POST http://localhost:8080/api/lawyer-verification/submit
+Content-Type: application/json
+
+{
+  "name": "Deepesh",
+  "email": "deepesh@gmail.com",
+  "barCouncilId": "BC123",
+  "city": "Gurgaon",
+  "state": "Haryana",
+  "specialization": "Criminal Law",
+  "experience": "2 years",
+  "documentUrl": "resume.pdf",
+  "userId": "user123",
+  "status": "PENDING"
+}
+
+### Get All Verifications
+GET http://localhost:8080/api/lawyer-verification/all
+
+### Get Pending Verifications
+GET http://localhost:8080/api/lawyer-verification/pending
