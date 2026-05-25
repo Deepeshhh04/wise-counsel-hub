@@ -3,7 +3,6 @@ import {
   Bookmark,
   Clock,
   ArrowRight,
-  ShieldAlert,
   CheckCircle,
   ShieldCheck,
 } from "lucide-react";
@@ -16,28 +15,15 @@ import { Link } from "react-router-dom";
 
 import { useQuery } from "@tanstack/react-query";
 import { formatDistanceToNow } from "date-fns";
-import { toast } from "sonner";
 
 import LawyerCard from "@/components/LawyerCard";
 import { PageTransition } from "@/components/PageTransition";
-
-import { motion } from "framer-motion";
 
 interface QueryItem {
   id: number;
   queryText: string;
   category: string;
   timestamp: string;
-}
-
-interface VerificationItem {
-  id: number;
-  name: string;
-  email: string;
-  barCouncilId: string;
-  documentUrl: string;
-  status: string;
-  submittedAt: string;
 }
 
 const savedAnswers = [
@@ -68,33 +54,6 @@ const DashboardPage = () => {
       ];
     },
   });
-
-  const { data: pendingVerifications = [] } =
-    useQuery<VerificationItem[]>({
-      queryKey: ["pendingVerifications"],
-      queryFn: async () => {
-        return [
-          {
-            id: 1,
-            name: "Adv. Rahul Singh",
-            email: "rahul@law.com",
-            barCouncilId: "D/555/2015",
-            documentUrl: "#",
-            status: "PENDING",
-            submittedAt: new Date().toISOString(),
-          },
-        ];
-      },
-    });
-
-  const handleVerification = async (
-    id: number,
-    status: "APPROVED" | "REJECTED"
-  ) => {
-    toast.success(
-      `Lawyer verification ${status.toLowerCase()}`
-    );
-  };
 
   const recommendedLawyers = [
     {
@@ -146,19 +105,19 @@ const DashboardPage = () => {
         {[
           {
             label: "Total Queries",
-            value: "1,284",
+            value: "20",
             sub: "+12% this month",
             icon: MessageSquare,
           },
           {
             label: "Verified Lawyers",
-            value: "420",
+            value: "6",
             sub: "Active across India",
             icon: ShieldCheck,
           },
           {
             label: "Resolved Cases",
-            value: "856",
+            value: "15",
             sub: "Community supported",
             icon: CheckCircle,
           },
@@ -284,62 +243,6 @@ const DashboardPage = () => {
                 </p>
               </div>
             </div>
-          ))}
-        </CardContent>
-      </Card>
-
-      {/* Admin Section */}
-      <Card>
-        <CardHeader className="flex flex-row items-center gap-4">
-          <ShieldAlert className="w-6 h-6 text-primary" />
-
-          <CardTitle>Admin Panel</CardTitle>
-        </CardHeader>
-
-        <CardContent className="space-y-6">
-          {pendingVerifications.map((v) => (
-            <motion.div
-              key={v.id}
-              whileHover={{ scale: 1.02 }}
-              className="p-6 rounded-2xl border space-y-4"
-            >
-              <div>
-                <p className="font-bold">
-                  {v.name}
-                </p>
-
-                <p className="text-xs text-muted-foreground">
-                  {v.barCouncilId}
-                </p>
-              </div>
-
-              <div className="flex gap-3">
-                <Button
-                  className="flex-1"
-                  onClick={() =>
-                    handleVerification(
-                      v.id,
-                      "APPROVED"
-                    )
-                  }
-                >
-                  Approve
-                </Button>
-
-                <Button
-                  variant="outline"
-                  className="flex-1"
-                  onClick={() =>
-                    handleVerification(
-                      v.id,
-                      "REJECTED"
-                    )
-                  }
-                >
-                  Reject
-                </Button>
-              </div>
-            </motion.div>
           ))}
         </CardContent>
       </Card>
